@@ -1,0 +1,26 @@
+@page "/counter"
+To see the Pre-Rendering in effect, open the browser dev tools and set the network speed to slow, then refresh.
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+@if (IsPreRendering)
+{
+  <button class="btn btn-dark" onclick="@IncrementCount" disabled>Don't Click me</button>
+}
+else
+{
+  <button class="btn btn-primary" onclick="@IncrementCount">Click me</button>
+}
+
+@functions {
+    [CascadingParameter(Name = "PreRendering")] protected bool IsPreRendering { get; set; }
+
+    int currentCount = 0;
+
+    void IncrementCount()
+    {
+        currentCount++;
+    }
+}

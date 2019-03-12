@@ -1,0 +1,17 @@
+﻿@page "/"
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+To see the Pre-Rendering in effect, open the browser dev tools and set the network speed to slow, then refresh.
+
+Also check out the Counter page for another example.
+
+@if (IsPreRendering)
+{
+  <h2>Warming up the engine...</h2>
+}
+@functions {
+  [CascadingParameter(Name = "PreRendering")] protected bool IsPreRendering { get; set; }
+}
