@@ -1,19 +1,10 @@
-@page "/fetchdata"
-@using PreRenderSample.Services
-@inject IWeatherForecastService ForecastService
-<mark>
-    To see the Pre-Rendering in effect, open the browser dev tools,
-    set the network speed to slow, then refresh.
-</mark>
-@inject PreRenderComponent.IPreRenderFlag PreRenderFlag
-@if (PreRenderFlag.IsPreRendering)
-{
-    <h1>Pre-Rendering</h1>
-}
+﻿@page "/fetchdata"
+@using HostedPreRenderSample.Shared
+@inject HttpClient Http
 
 <h1>Weather forecast</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<p>This component demonstrates fetching data from the server.</p>
 
 @if (forecasts == null)
 {
@@ -43,12 +34,13 @@ else
         </tbody>
     </table>
 }
-@code
-{
-    WeatherForecast[] forecasts;
+
+@code {
+    private WeatherForecast[] forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("WeatherForecast");
     }
+
 }

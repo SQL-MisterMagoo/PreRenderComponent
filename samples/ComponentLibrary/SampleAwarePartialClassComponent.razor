@@ -1,0 +1,12 @@
+﻿@inherits OwningComponentBase
+<div class="my-component">
+    This Blazor component is defined in the <strong>ComponentLibrary</strong> package.
+</div>
+
+@if (PreRenderFlag?.IsPreRendering ?? false)
+{
+    <h1>Pre-Rendered</h1>
+} else
+{
+    <h1>Live!</h1>
+}
