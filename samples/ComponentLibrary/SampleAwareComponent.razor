@@ -1,0 +1,30 @@
+﻿<div class="my-component">
+    This Blazor component is defined in the <strong>ComponentLibrary</strong> package.
+</div>
+@inherits OwningComponentBase
+
+@code
+{
+    IPreRenderFlag preRenderFlag { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        try
+        {
+            preRenderFlag = (IPreRenderFlag)ScopedServices.GetService(typeof(IPreRenderFlag));
+        }
+        catch
+        {
+        }
+    }
+}
+
+@if (preRenderFlag is object && preRenderFlag.IsPreRendering)
+{
+    <h1>Pre-Rendered</h1>
+}
+else
+{
+    <h1>Live!</h1>
+}

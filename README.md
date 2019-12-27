@@ -60,4 +60,38 @@ protected bool IsPreRendering { get; set; }
 }
 ```
 
+## Component Library Authors
 
+If you want to build in the ability to use this flag without "locking" your users into it, I suggest following this pattern for your component class:
+
+``` CSharp
+@inherits OwningComponentBase
+
+@code
+{
+    IPreRenderFlag preRenderFlag { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        try
+        {
+            preRenderFlag = (IPreRenderFlag)ScopedServices.GetService(typeof(IPreRenderFlag));
+        }
+        catch
+        {
+        }
+    }
+}
+
+@if (preRenderFlag is object && preRenderFlag.IsPreRendering)
+{
+    <h1>Pre-Rendered</h1>
+}
+else
+{
+    <h1>Live!</h1>
+}
+```
+
+Use of `OwningComponentBase` allows you to safely check for the `IPreRenderFlag` service without Dependency Injection errors.
