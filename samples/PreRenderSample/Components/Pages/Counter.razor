@@ -1,6 +1,12 @@
 @page "/counter"
-To see the Pre-Rendering in effect, open the browser dev tools, 
-set the network speed to slow, then refresh.
+<mark>
+    To see the Pre-Rendering in effect, open the browser dev tools,
+    set the network speed to slow, then refresh.
+</mark>
+@if (IsPreRendering)
+{
+    <h1>Pre-Rendering</h1>
+}
 
 <h1>Counter</h1>
 
@@ -8,11 +14,11 @@ set the network speed to slow, then refresh.
 
 @if (IsPreRendering)
 {
-  <button class="btn btn-dark" onclick="@IncrementCount" disabled>Don't Click me</button>
+    <button class="btn btn-dark" @onclick="IncrementCount" disabled>Don't Click me</button>
 }
 else
 {
-  <button class="btn btn-primary" onclick="@IncrementCount">Click me</button>
+    <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 }
 
 @functions {
