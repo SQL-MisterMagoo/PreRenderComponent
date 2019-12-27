@@ -1,6 +1,15 @@
 @page "/fetchdata"
 @using PreRenderSample.Services
-@inject WeatherForecastService ForecastService
+@inject PreRenderComponent.IPreRenderFlag PreRenderFlag
+@inject IWeatherForecastService ForecastService
+<mark>
+    To see the Pre-Rendering in effect, open the browser dev tools,
+    set the network speed to slow, then refresh.
+</mark>
+@if (PreRenderFlag.IsPreRendering)
+{
+    <h1>Pre-Rendering</h1>
+}
 
 <h1>Weather forecast</h1>
 
@@ -34,11 +43,11 @@ else
         </tbody>
     </table>
 }
-
-@functions {
+@code
+{
     WeatherForecast[] forecasts;
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
     }
